@@ -1,0 +1,18 @@
+[Unit]
+Description=UBI Bot (@timeubibot) — Time-based Universal Basic Income
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=YOUR_LINUX_USER
+WorkingDirectory=/path/to/ubi-bot
+EnvironmentFile=/path/to/your/ubi-bot.env
+ExecStart=/path/to/ubi-bot/.venv/bin/python /path/to/ubi-bot/bot.py
+Restart=on-failure
+RestartSec=5
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target

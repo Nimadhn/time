@@ -1,0 +1,27 @@
+# Virtual environment
+.venv/
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Database files — never commit live data
+*.db
+*.db-shm
+*.db-wal
+ubi_bot.db
+
+# Environment / secrets
+.env
+*.env
+
+# Runtime logs
+bot.log
+nohup.out
+*.log
+
+# OS artifacts
+.DS_Store
+Thumbs.db

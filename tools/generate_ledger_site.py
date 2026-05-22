@@ -87,12 +87,34 @@ def fmt_iso_human(iso: str) -> str:
 
 
 def handle_url(handle: str) -> str:
-    """URL-encode a handle for use in /handle/<x>.html.
+    """URL-encode a handle for use in /handle/<x>.html links.
 
-    Colons must be encoded because Apache mishandles them in some
-    contexts and Cloudflare normalises URLs.
+    The file on disk has a raw `:` in its name (see `handle_filename`);
+    we URL-encode in links so the resulting URL is RFC-clean. Apache
+    decodes the `%3A` back to `:` before file lookup, so both encoded
+    and raw forms resolve to the same file.
     """
     return urllib.parse.quote(handle, safe="")
+
+
+def handle_filename(handle: str) -> str:
+    """On-disk filename for a handle's detail page.
+
+    Uses the raw handle (with `:`) so Apache's URL-decoding step
+    matches the filename. Writing the file with literal `%3A` in the
+    name results in 404s because Apache decodes the URL before the
+    filesystem lookup.
+    """
+    # Strip any characters that would actually break a filesystem.
+    # Handles legally contain `:` and ASCII alnum; everything else
+    # we conservatively percent-encode to be safe.
+    safe = []
+    for ch in handle:
+        if ch.isalnum() or ch in (":", "-", "_", "."):
+            safe.append(ch)
+        else:
+            safe.append("_")
+    return "".join(safe) + ".html"
 
 
 # --------------------------------------------------------------------------- #
@@ -765,11 +787,12 @@ def generate(ledger_root: Path) -> dict:
         if _atomic_write(tx_out / f"{tx['id']}.html", build_tx_detail(tx)):
             counts["tx"] += 1
 
-    # Handle detail pages — URL-encode the colons
+    # Handle detail pages — raw `:` on disk (Apache decodes %3A before
+    # looking up the file, so encoded filenames 404). Links in the
+    # generated HTML are URL-encoded so the *URLs* stay RFC-clean.
     handle_out = out_root / "handle"
     for handle, handle_txs in by_handle.items():
-        fname = handle_url(handle) + ".html"
-        if _atomic_write(handle_out / fname, build_handle_detail(handle, handle_txs)):
+        if _atomic_write(handle_out / handle_filename(handle), build_handle_detail(handle, handle_txs)):
             counts["handle"] += 1
 
     return counts

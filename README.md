@@ -1,6 +1,6 @@
 # UBI World Telegram Bot
 
-First functional implementation of the [ubi.world](https://ubi.world) time-based Universal Basic Income protocol.
+First functional implementation of the [ubi.vision](https://ubi.vision) time-based Universal Basic Income protocol. The network ledger lives at [ubi.world](https://ubi.world).
 
 Bot: [@timeubibot](https://t.me/timeubibot)
 
@@ -10,7 +10,7 @@ Bot: [@timeubibot](https://t.me/timeubibot)
 
 A Telegram bot that runs the UBI World time protocol. Every registered user receives 24 hours per day in their Daily Wallet. Users can send time to each other, carry earned time in a Time Vault, and unspent Wallet time flows to Universal Circles at midnight UTC.
 
-See [ubi.world](https://ubi.world) for the full protocol specification.
+See [ubi.vision](https://ubi.vision) for the full protocol specification.
 
 ---
 
@@ -71,9 +71,10 @@ The bot starts in polling mode — no webhook or server required. The SQLite dat
 
 | Command | Description |
 |---------|-------------|
-| `/start` | Register and create your Handle |
+| `/start` | Register and create your Handle (e.g. `house:cat:888`) |
 | `/balance` | Show Daily Wallet + Time Vault |
-| `/send @user 2h 30m` | Send time to another user |
+| `/send @user 2h 30m` | Send time to another user by Telegram username |
+| `/send house:cat:888 2h 30m` | Send time by Handle |
 | `/send @user 1h blue:80` | Send time with 80% Blue feedback |
 | `/history` | Recent transactions |
 | `/handle` | Show your Handle |
@@ -84,6 +85,8 @@ The bot starts in polling mode — no webhook or server required. The SQLite dat
 ## How It Works
 
 - Every user gets **24 hours** in their Daily Wallet at midnight UTC
+- Each user has a **Handle** in the form `slot:slot:slot` (e.g. `house:cat:888`) — the cross-node identity
+  - The parser also accepts an optional `@node.domain` suffix (e.g. `house:cat:888@cat.ubi.asia`) for forward-compatibility with federation
 - Send time to other users — it goes into their **Time Vault**
 - Unspent Wallet time flows to **Universal Circles** at midnight
 - Time Vault holds time received from others (max 24h for Tier 1)
@@ -125,7 +128,7 @@ ubi-bot/
 
 ---
 
-## Key Design Rules (from ubi.world spec)
+## Key Design Rules (from ubi.vision spec)
 
 1. No conversion between time and money
 2. Daily Wallet expires at midnight — unspent feeds community
@@ -137,4 +140,4 @@ ubi-bot/
 
 ---
 
-Protocol documentation: [ubi.world](https://ubi.world)
+Protocol documentation: [ubi.vision](https://ubi.vision)

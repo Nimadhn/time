@@ -236,7 +236,7 @@ async def cmd_start(message: Message, state: FSMContext):
         return
 
     await message.answer(
-        "Welcome to UBI.World!\n\n"
+        "Welcome to Time for UBI.\n\n"
         "Let's create your Handle. Your identity in the time economy.\n"
         "Format: slot1:slot2:slot3\n\n"
         "You'll choose 3 slots — any word, number, or phrase you like.\n\n"
@@ -1076,7 +1076,7 @@ async def cmd_handle(message: Message, state: FSMContext):
 async def cmd_help(message: Message, state: FSMContext):
     await state.clear()
     await message.answer(
-        "UBI.World Bot — Command Reference\n\n"
+        "Time for UBI bot — Command Reference\n\n"
         "/start — Register and create your Handle\n"
         "/balance — Show your Daily Wallet + Time Vault\n"
         "/send — Send time (walks you through it step by step)\n"

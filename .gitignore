@@ -11,6 +11,7 @@ __pycache__/
 *.db
 *.db-shm
 *.db-wal
+*.db.bak*
 ubi_bot.db
 
 # Environment / secrets

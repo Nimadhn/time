@@ -1,7 +1,7 @@
 # UBI Bot — Operator Deployment Guide
 
 A practical, end-to-end guide for standing up your own node of the
-[UBI World](https://ubi.world) Telegram bot. Written for operators who have a
+[UBI World](https://ubi.vision) Telegram bot. Written for operators who have a
 server and a Telegram account, and want to be up and running in under an hour.
 
 If you only need the high-level idea, read **What this is** and **Federation
@@ -13,7 +13,7 @@ status** below; everything else is a runbook.
 
 This repository is the canonical source for the UBI World Telegram bot — a
 Python 3.10+ async bot that implements the
-[ubi.world](https://ubi.world) time-based Universal Basic Income protocol.
+[ubi.vision](https://ubi.vision) time-based Universal Basic Income protocol.
 Every user gets a Daily Wallet of 24 hours per day, can send time to other
 users, accrues received time in a Time Vault, and feeds unspent Wallet time
 to community Circles at midnight UTC.
@@ -525,7 +525,7 @@ this guide will be updated with the operational changes node operators need
 to make.
 
 If you want to discuss the federation design, the relevant conversation is
-happening at [ubi.world](https://ubi.world) and in the project's
+happening at [ubi.vision](https://ubi.vision) and in the project's
 communication channels — not here.
 
 ---
@@ -624,4 +624,4 @@ ubi-bot/
 ## Questions, bugs, contributions
 
 Open issues and PRs at <https://github.com/UBIworld/time>. Protocol-level
-discussion belongs at [ubi.world](https://ubi.world).
+discussion belongs at [ubi.vision](https://ubi.vision).

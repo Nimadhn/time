@@ -1,6 +1,6 @@
 # UBI World Telegram Bot
 
-First functional implementation of the [ubi.world](https://ubi.world) time-based Universal Basic Income protocol.
+First functional implementation of the [ubi.vision](https://ubi.vision) time-based Universal Basic Income protocol. The network ledger lives at [ubi.world](https://ubi.world).
 
 Bot: [@timeubibot](https://t.me/timeubibot)
 
@@ -10,7 +10,7 @@ Bot: [@timeubibot](https://t.me/timeubibot)
 
 A Telegram bot that runs the UBI World time protocol. Every registered user receives 24 hours per day in their Daily Wallet. Users can send time to each other, carry earned time in a Time Vault, and unspent Wallet time flows to Universal Circles at midnight UTC.
 
-See [ubi.world](https://ubi.world) for the full protocol specification.
+See [ubi.vision](https://ubi.vision) for the full protocol specification.
 
 ---
 
@@ -128,7 +128,7 @@ ubi-bot/
 
 ---
 
-## Key Design Rules (from ubi.world spec)
+## Key Design Rules (from ubi.vision spec)
 
 1. No conversion between time and money
 2. Daily Wallet expires at midnight — unspent feeds community
@@ -140,4 +140,4 @@ ubi-bot/
 
 ---
 
-Protocol documentation: [ubi.world](https://ubi.world)
+Protocol documentation: [ubi.vision](https://ubi.vision)

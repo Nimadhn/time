@@ -3,3 +3,8 @@ aiosqlite>=0.19
 apscheduler>=3.10,<4.0
 python-dotenv>=1.0
 pytz>=2024.1
+
+# Ledger MVP: Ed25519 signing of transaction receipts written to
+# ubi.world/ledger/. Same library the federation track uses for node
+# identity keys, so adding it here costs no new dependency overall.
+pynacl>=1.5,<2.0

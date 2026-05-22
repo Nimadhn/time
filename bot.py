@@ -41,6 +41,17 @@ from wallet import (
     time_until_midnight_utc,
     parse_time_input,
 )
+# Ledger MVP: signed JSON mirror of each transaction lands on disk for
+# ubi.world to render. Import is best-effort — if pynacl isn't installed
+# we degrade to "no ledger" without breaking the bot.
+try:
+    import ledger as _ledger
+except Exception as _ledger_exc:  # pragma: no cover
+    _ledger = None
+    logging.getLogger("ubi-bot").warning(
+        "ledger module unavailable (%s); transactions will not be mirrored to ubi.world",
+        _ledger_exc,
+    )
 
 # ---------------------------------------------------------------------------
 # Logging
@@ -480,6 +491,19 @@ async def _do_transfer(message: Message, sender: dict, recipient: dict, amount: 
                 f"(Wallet + Vault combined)."
             )
         return False
+
+    # Mirror this transaction to the public ledger at ubi.world.
+    # The DB write has already committed — if the ledger write fails
+    # we log and continue. The ledger is never the source of truth.
+    if _ledger is not None and result.get("tx_id") is not None:
+        _ledger.write_local_transaction_to_ledger(
+            tx_id=result["tx_id"],
+            sender_handle=result["sender_handle"],
+            recipient_handle=result["recipient_handle"],
+            amount_seconds=result["amount"],
+            blue_pct=result["blue_pct"],
+            created_at=result["created_at"],
+        )
 
     # Build source description
     source_parts = []

@@ -352,19 +352,30 @@ async def execute_transfer(
                     (circle_share, key),
                 )
 
-        # Record transaction
-        await db.execute(
+        # Record transaction. Capture id + created_at so the caller can
+        # mirror the row to the public ledger without a second query.
+        cursor = await db.execute(
             """
             INSERT INTO transactions (sender_id, recipient_id, amount, wallet_part, vault_part, blue_pct)
             VALUES (?, ?, ?, ?, ?, ?)
             """,
             (sender["id"], recipient["id"], amount, wallet_part, vault_part, blue_pct),
         )
+        tx_id = cursor.lastrowid
+        cursor = await db.execute(
+            "SELECT created_at FROM transactions WHERE id = ?", (tx_id,)
+        )
+        created_row = await cursor.fetchone()
+        created_at = created_row["created_at"] if created_row else None
 
         await db.commit()
 
     return {
         "success": True,
+        "tx_id": tx_id,
+        "created_at": created_at,
+        "sender_handle": sender["handle_display"],
+        "recipient_handle": recipient["handle_display"],
         "amount": amount,
         "wallet_part": wallet_part,
         "vault_part": vault_part,
